@@ -3,23 +3,7 @@
 END_PAGE="doesn’t have any public repositories yet"
 
 
-EXTENSIONS=(html css cpp py lua c js ts sh md)
-blamelines() {
-    LINES=0
-    for i in * .*; do 
-        if [[ "$i" == ".git" ]]; then continue; fi
-        if [[ -d "$i" ]]; then
-            cd "$i"
-            DIR_LINES="$(blamelines)"
-            cd ..
-            ((LINES+=DIR_LINES))
-        else
-            FILE_LINES="$(git blame "$i" | grep "$USERNAME" | wc -l)"
-            ((LINES+=FILE_LINES))
-        fi
-    done
-    echo $LINES
-}
+EXTENSIONS=(html css cpp py lua c js ts sh md go)
 find_name_args=()
 for ext in "${EXTENSIONS[@]}"; do
   if [[ ${#find_name_args[@]} -gt 0 ]]; then
